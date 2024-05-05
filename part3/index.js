@@ -27,7 +27,7 @@ let notes = [
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
   console.dir(request.ip)
-  //console.dir(request.user-agent)
+  //console.dir(request)
 })
 
 app.get('/api/notes', (request, response) => {
