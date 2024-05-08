@@ -1,6 +1,9 @@
-const express = require('express')
+const express = require('express') //导入express库
 const app = express()
 
+app.use(express.json())
+//json-parser 的功能是将请求的 JSON 数据转化为 JavaScript 对象
+//然后在调用路由处理程序之前将其附加到 request 对象的 body 属性
 
 let notes = [
   {
@@ -23,6 +26,29 @@ let notes = [
   }
 ]
 
+let persons = [
+  {
+    "id": 1,
+    "name": "Arto Hellas",
+    "number": "040-123456"
+  },
+  {
+    "id": 2,
+    "name": "Ada Lovelace",
+    "number": "39-44-5323523"
+  },
+  {
+    "id": 3,
+    "name": "Dan Abramov",
+    "number": "12-43-234345"
+  },
+  {
+    "id": 4,
+    "name": "Mary Poppendieck",
+    "number": "39-23-6423122"
+  }
+]
+
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
@@ -32,6 +58,22 @@ app.get('/', (request, response) => {
 
 app.get('/api/notes', (request, response) => {
   response.json(notes)
+})
+
+
+//3.1
+app.get('/api/persons', (request, response) => {
+  response.json(persons)
+})
+
+//3.2
+app.get('/info', (request, response) => {
+
+  // 模板字符串``
+  const res = `<p>Phonebook has info for ${persons.length} people</p><p>${Date()}</p>`
+  console.log(res)
+  response.send(res)
+
 })
 
 const PORT = 3001
