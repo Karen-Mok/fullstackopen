@@ -76,6 +76,66 @@ app.get('/info', (request, response) => {
 
 })
 
+//3.3
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const person = persons.find(person => person.id === id)
+
+  console.log(id,typeof(id))
+
+  if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
+})
+
+//3.4
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
+})
+
+//3.5-3.6
+const generateId = () => {
+  const Id = Math.round(Math.random()*10000)
+  return Id 
+}
+
+app.post('/api/persons',(request, response) => {
+
+  const body = request.body
+
+  //错误处理一
+  if(!body.name || !body.number ) {
+    return response.status(400).json({
+      error : 'name or number missing'
+    })
+    //只有if没有else的写法，必须调用 return
+    //否则代码会执行到最后，错误的person会被保存到应用中
+  }
+
+  //错误处理二
+  if(persons.find(person => person.name === body.name)) {
+    return response.status(400).json({
+      error : 'name must be unique'
+    })
+  }
+
+  const person = {
+    "id" : generateId(),
+    "name":body.name,
+    "number":body.number
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
