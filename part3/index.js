@@ -1,9 +1,28 @@
 const express = require('express') //导入express库
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-//json-parser 的功能是将请求的 JSON 数据转化为 JavaScript 对象
+//json-parser 中间件，功能是将请求的 JSON 数据(字符串)转化为 JavaScript 对象
 //然后在调用路由处理程序之前将其附加到 request 对象的 body 属性
+
+//3.7
+//app.use(morgan('tiny'))
+
+//3.8
+/*const middleware = (request, response, next) => {
+  //console.log(typeof request.body)  //此时的body是经过express.json处理得到的js对象
+  //console.log(typeof JSON.stringify(request.body))  //把js对象转换为原始的json字符串
+  next()
+}
+
+app.use(middleware)*/ //对于3.8来说，不需要中间件，写这个只是为了练习
+
+morgan.token('showReqBody', function getBody (req) {
+  const body =JSON.stringify(req.body)
+  return body
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :showReqBody'))
 
 let notes = [
   {
