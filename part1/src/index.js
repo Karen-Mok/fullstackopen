@@ -19,8 +19,10 @@ root.render(
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import App from './App'
+//import App from './App'  //原始教程的代码
+//import App from './exercise1'  //习题1.6-1.11代码文件
+import App from './anecdotes'
 
-let counter = 1
+//let counter = 1
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)

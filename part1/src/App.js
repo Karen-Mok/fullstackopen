@@ -180,6 +180,8 @@ const App = () => {
   )
 }*/
 
+
+//Conditional rendering
 const History = (props) => {
   if (props.allClicks.length === 0) {
     return (
